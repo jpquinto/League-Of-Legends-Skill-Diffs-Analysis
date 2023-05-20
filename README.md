@@ -131,3 +131,48 @@ sorted_correlation = correlation_values.abs().sort_values(ascending=False)
 sorted_correlation.head(30)
 ```
 
+These all make sense. For example, obviously taking more towers would result in more wins, as you have to take towers to win the game. But a lot of these statistics are team-wide, and the original dataset does not have individual player data for these. 
+
+### Deciding The Performance Metric: W-SCORE
+
+So based on the correlation coefficients calculated above, our performance metric will be:
+
+$$(\text{STD KDA} \times 0.9) + (\text{STD EARNED GPM} \times 0.88) + (\text{STD GOLD DIFF AT 15} \times 0.75) + (\text{STD XP DIFF AT 15} \times 0.73) + (\text{STD CS DIFF AT 15} \times 0.64)$$
+
+This is the sum of the top 5 player-specific statistics in terms of correlation coefficient with winrate, **standardized**, and weighted by their respective correlation coefficients. Of course, this isn't a *perfect* performance metric, as there are many intangible things that players can do to be better. But this is the best analysis we can do using the statistics we have. 
+
+Going forward, we'll refer to this statistic as **"W-Score"**.
+
+---
+## Univariate Analysis: Who is the best? (and worst?)
+
+So now that we have a performance metric, we can find out the best and worst players in the LCS in terms of W-Score. 
+
+First of all, we don't want outliers in our data, so we will set a minimum amount of games played as 10. 
+
+Then, we calculated the W-Score of each player and added it to the dataframe. 
+
+| playername   | team              | position   |    WSCORE |
+|:-------------|:------------------|:-----------|----------:|
+| Abbedagge    | 100 Thieves       | mid        |  0.130822 |
+| Ablazeolive  | Golden Guardians  | mid        | -1.37417  |
+| Aiming       | KT Rolster        | bot        |  4.03204  |
+| Aria         | KT Rolster        | mid        | -2.12278  |
+| Arrow        | Immortals         | bot        | -3.79693  |
+| Bdd          | Nongshim RedForce | mid        | -0.360007 |
+| Berserker    | Cloud9            | bot        |  3.7277   |
+| BeryL        | DRX               | sup        |  0.149048 |
+| Biofrost     | Dignitas          | sup        | -1.48645  |
+| Bjergsen     | Team Liquid       | mid        |  5.21788  |
+
+Below is the distribution of the WSCOREs for the league:
+
+<iframe src="assets/wscore.html" width=800 height=600 frameBorder=0></iframe>
+
+Of course, since we used standardized data, our WSCORE is roughly normally distributed. 
+
+### Interesting Aggregates: Positions
+
+Now we want to want to choose the players with the best WSCORE of the bunch. But there's a problem: League of Legends has different roles, or **positions**. We can expect that a player in the support role may not have the same amount of kills as someone from the ACD role, for example. 
+
+Let's take a look at the distribution of `WSCORE` for support players.
