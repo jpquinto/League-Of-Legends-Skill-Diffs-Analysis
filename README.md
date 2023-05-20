@@ -1,5 +1,6 @@
 # "Top Diff"
 **Jeremy Quinto**
+*Note: the more detailed writeup is in `project.ipynb`*
 
 ## Introduction
 
@@ -277,3 +278,52 @@ for _ in range(n_repetitions):
 The distribution of the test statistic we found can be found below. The red line is the observed statistic. 
 
 <iframe src="assets/empirical_distribution.html" width=800 height=600 frameBorder=0></iframe>
+
+Computing our **p-value**:
+
+```
+p_value = np.mean(differences >= observed_diff)
+```
+We obtained our **p-value = 0.19**.
+
+---
+## Conclusion
+
+This means that in this case, we fail to reject the null hypothesis. In other words, **there is not sufficient evidence to support the claim that the gap between the best players and the average player is higher than the gap between the average player and the worst players, specifically in the LCS and LCK 2022 season**. 
+
+What does this mean? This doesn't necesarilly mean that the average player in the league is as close to the bottom as they are to the top, we can't know for sure. The gap between the highest player in the league and the average player *could* still be higher, but there is not sufficient enough evidence to point to this.
+
+Thus, the relative locations of the "skill floor" and "skill ceilings" remain unknown.
+
+However, we have at least come up with an interesting performance metric to rate League of Legends players! Here is the sorted list of the top 25 players from the 2022 LCS and LCK season, based on the `PAWSCORE` metric, if you're curious:
+
+| playername   | team             | position   |   PAWSCORE |
+|:-------------|:-----------------|:-----------|-----------:|
+| Chovy        | Gen.G            | mid        |   10.8312  |
+| Prince       | Liiv SANDBOX     | bot        |    6.79801 |
+| Summit       | Cloud9           | top        |    6.07203 |
+| Oner         | T1               | jng        |    5.97414 |
+| huhi         | 100 Thieves      | sup        |    5.39983 |
+| Hans Sama    | Team Liquid      | bot        |    5.26718 |
+| Bjergsen     | Team Liquid      | mid        |    5.17724 |
+| Blaber       | Cloud9           | jng        |    5.10206 |
+| Ruler        | Gen.G            | bot        |    4.73252 |
+| Peanut       | Gen.G            | jng        |    4.48142 |
+| Keria        | T1               | sup        |    4.36877 |
+| Zeus         | T1               | top        |    4.25127 |
+| Bwipo        | Team Liquid      | top        |    4.24592 |
+| Gumayusi     | T1               | bot        |    3.76698 |
+| Doran        | Gen.G            | top        |    3.73132 |
+| Ssumday      | 100 Thieves      | top        |    3.6527  |
+| Pridestalkr  | Golden Guardians | jng        |    3.62718 |
+| Moham        | Kwangdong Freecs | sup        |    3.54426 |
+| Nuguri       | DWG KIA          | top        |    3.37927 |
+| Inspired     | Evil Geniuses    | jng        |    3.30361 |
+| Lehends      | Gen.G            | sup        |    3.15099 |
+| Jensen       | Cloud9           | mid        |    3.08008 |
+| Aiming       | KT Rolster       | bot        |    3.03437 |
+| BeryL        | DRX              | sup        |    2.83118 |
+| Danny        | Evil Geniuses    | bot        |    2.81346 |
+
+
+# Thanks for reading!
