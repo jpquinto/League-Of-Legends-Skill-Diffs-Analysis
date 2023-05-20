@@ -211,3 +211,69 @@ Here is a look at *some* our data with `PAWSCORE` added:
 As you can see, there is a big difference between `WSCORE` and `PAWSCORE`. We can take a look at the distribution of `PAWSCORE`
 
 <iframe src="assets/pawscore.html" width=800 height=600 frameBorder=0></iframe>
+
+This distribution is a little less normal than the `WSCORE` distribution, which makes sense. 
+
+The player on the far right is a player named Chovy. 
+
+It seems that statistically, Chovy was the best player by a wide margin in `PAWSCORE`, at least for the 2022 season. A quick Google search says that Chovy is certainly *one* of the best `mid` players in the league, so this is a good sign for our `PAWSCORE` metric. In the season we are looking at, Chovy lead his team to the finals but ended up losing. 
+
+Now that we have the `PAWSCORE` metric, we can answer our question: **Is the gap between the best player(s) and the average players larger than the gap between the average players and the worst players?**
+
+---
+# Hypothesis Testing: Answering the Question
+
+These are our hypotheses:
+
+$H_0$ (null hypothesis): The gap between the best player and the average player is **not larger** than the gap between the average player and the worst players.
+
+$H_1$ (alt. hypothesis): The gap between the best player and the average player **is larger** than the gap between the average player and the worst players.
+
+We will use a **significance level** of **5%**. 
+
+Our **test statistic** is going to be:
+
+(gap between top and average) - (gap between average and worst)
+
+=
+
+(mean PAWSCORE of top players - league average PAWSCORE) - (league average PAWSCORE - mean PAWSCORE of bottom players)
+
+This is the difference between the gap between the best and average players, and the gap between the average and worst players. 
+
+This can be simplified knowing that the league average `PAWSCORE` is 0:
+
+(mean PAWSCORE of top players) - abs(mean PAWSCORE of bottom players)
+
+
+
+We will look at the top 30 and bottom 30 players in terms of `PAWSCORE`. Note that the players in the top 30 all have a positive `PAWSCORE`, and the players in the bottom 30 all have a negative `PAWSCORE`. 30 players in either tier is a reasonable amount of players to be considered the "best of the league" and the "worst of the league". (*Note*: changing these numbers didn't change the final result anyway)
+
+Calculating the gaps: for `top_players`, the gap is just their `PAWSCORE`. For the `bottom_players`, the gap is the absolute value of their `PAWSCORE`. We can store these values to compare in `ABS PAWSCORE`:
+
+Our **observed test statistic** is the absolute difference between the means of `ABS PAWSCORE` for `top_players` and `bottom_players`. **This value ended up being 0.334001**.
+
+We performed a permutation test, shuffling values to get the distribution of the test statistic. 
+```
+n_repetitions = 100
+
+differences = []
+for _ in range(n_repetitions):
+    # Step 1: Shuffle the PAWSCORES and store them in a DataFrame
+    with_shuffled = combined_players.assign(Shuffled_PAW=np.random.permutation(combined_players['ABS PAWSCORE']))
+    
+    # Step 2: Compute the test statistic
+    group_means = (
+        with_shuffled
+        .groupby('top')
+        .mean()
+        .loc[:, 'Shuffled_PAW']
+    )
+    difference = group_means.diff().iloc[-1]
+    
+    differences.append(difference)
+```
+
+The distribution of the test statistic we found can be found below. The red line is the observed statistic. 
+
+<iframe src="assets/empirical_distribution.html" width=800 height=600 frameBorder=0></iframe>
