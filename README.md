@@ -68,6 +68,8 @@ Other steps included:
 
 Here is *part* of what our final `players` dataset looks like:
 
+#### `players`
+
 | playername   | team                | position   |   KDA |   gamesplayed |
 |:-------------|:--------------------|:-----------|------:|--------------:|
 | Abbedagge    | 100 Thieves         | mid        |  3.6  |            70 |
@@ -86,4 +88,46 @@ Next, note that when thinking about creating a performance metric, we must find 
 However, League of Legends is a **team sport**. In baseball, the LA Angels have arguably the two best players in the league and haven't even made the playoffs since 2019 (😂). So finding a perfect "performance metric" may not be accurate if we base it solely on individual performance. 
 
 So what we will do is create a dataframe called `teams`, which has the average statistics for each team. Then we will find the variables with the highest correlation with winrate, and create our performance metric from there.
+
+We made similar adjustments to what we did for the `players` dataframe. Here is *part* of what our final `teams` dataset looks like:
+
+#### `teams`
+
+| teamname                |   winrate |   KDA |   gamesplayed |
+|:------------------------|----------:|------:|--------------:|
+| 100 Thieves             |     0.566 | 3.944 |            76 |
+| 100 Thieves Academy     |     0.581 | 3.522 |           117 |
+| 100 Thieves Next        |     0.766 | 5.04  |            77 |
+| 1907 Fenerbahçe Academy |     0.667 | 3.821 |             3 |
+| 300                     |     0.417 | 3.083 |            12 |
+| 42 Gaming               |     0.375 | 2.131 |             8 |
+| 5 Ronin                 |     0.31  | 2.06  |            42 |
+| 5 Ronin Academy         |     0.176 | 1.894 |            34 |
+| 9z Team                 |     0.413 | 2.794 |            46 |
+| AGD E-Sports            |     0     | 1.27  |             3 |
+
+And that concluded our data cleaning!
+
+--- 
+## Bivariate Analysis: Making a Performance Metric
+Now we are ready to start creating our **performance metric** using our `teams` dataframe. 
+
+The first variable that comes to mind when winning games it *getting kills and not dying*. So of course, we look at the correlation between `KDA` and `winrate`. 
+
+<iframe src="assets/kdaVwinrate1.html" width=800 height=600 frameBorder=0></iframe>
+
+We can see a lot of teams have a winrate of `1`, which is impressive! But this is because many teams only played a couple games. After filtering out teams that didn't reach the cutoff I made, this was the results:
+
+<iframe src="assets/kdaVwinrate2.html" width=800 height=600 frameBorder=0></iframe>
+
+As expected, there is a very clear correlation between `KDA` and `winrate`, so we will use `KDA` in our performance metric. This makes sense, since killing the enemy and dying less definitely makes winning the game easier.
+
+We used the following code to get the correlation coefficients for each column:
+
+```
+correlation_values = teams.select_dtypes(include='number').corr()['winrate']
+# Sort the correlation values in descending order
+sorted_correlation = correlation_values.abs().sort_values(ascending=False)
+sorted_correlation.head(30)
+```
 
