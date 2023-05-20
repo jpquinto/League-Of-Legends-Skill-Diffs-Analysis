@@ -1,6 +1,6 @@
 # "Top Diff"
 **Jeremy Quinto**
-*Note: the more detailed writeup is in `project.ipynb`*
+*Note: this is not the most detailed writeup of this project*
 
 ## Introduction
 
