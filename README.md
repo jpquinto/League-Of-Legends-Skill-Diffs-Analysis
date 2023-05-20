@@ -137,7 +137,7 @@ These all make sense. For example, obviously taking more towers would result in 
 
 So based on the correlation coefficients calculated above, our performance metric will be:
 
-$$(\text{STD KDA} \times 0.9) + (\text{STD EARNED GPM} \times 0.88) + (\text{STD GOLD DIFF AT 15} \times 0.75) + (\text{STD XP DIFF AT 15} \times 0.73) + (\text{STD CS DIFF AT 15} \times 0.64)$$
+$(\text{STD KDA} \times 0.9) + (\text{STD EARNED GPM} \times 0.88) + (\text{STD GOLD DIFF AT 15} \times 0.75) + (\text{STD XP DIFF AT 15} \times 0.73) + (\text{STD CS DIFF AT 15} \times 0.64)$
 
 This is the sum of the top 5 player-specific statistics in terms of correlation coefficient with winrate, **standardized**, and weighted by their respective correlation coefficients. Of course, this isn't a *perfect* performance metric, as there are many intangible things that players can do to be better. But this is the best analysis we can do using the statistics we have. 
 
