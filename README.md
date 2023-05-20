@@ -18,14 +18,29 @@ Of course, like in other sports, the best and worst players can be subjective. B
 
 ### Procedure
 We will do the following steps in this report:
+
 1) Retrieve the data
+
 2) Perform **missingness analysis** to see what values are missing from the data and why they are
+
 3) **Clean** the data and get them in the form we want
+
 4) Use **bivariate analysis** to create a performance metric
+
 5) Use **univariate analysis** and our performance metric to choose the best, average, and worst players in the league
+
 6) Perform a **hypothesis test** to answer our question
+
 
 --- 
 
 ## Missingness Analysis
-After retrieving the data, 
+After retrieving the data, we performed **missingness analysis** on the data to see what columns are missing values. 
+
+We found that for the data there were many columns, such as `doublekills`, `triplekills`, `quadrakills`, and many more were **NMAR**, (Not Missing At Random). 
+
+We found all rows missing any of those values were missing all of them. Furthermore, we ran permutation tests to test missingness between `doublekills` and `triplekills`, and got a p-value of 0, indicating that there was a strong correlation between the missingness of those columns. We also ran a similar test between `doublekills` and `url`, but found no correlation.
+
+Next, we found that there were only 4 leagues that were missing those values. These are the leagues that had *at least 1* missing value for `doublekills`:
+<iframe src="assets/missing_values_plot.html" width=800 height=600 frameBorder=0></iframe>
+
