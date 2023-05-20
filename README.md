@@ -176,3 +176,38 @@ Of course, since we used standardized data, our WSCORE is roughly normally distr
 Now we want to want to choose the players with the best WSCORE of the bunch. But there's a problem: League of Legends has different roles, or **positions**. We can expect that a player in the support role may not have the same amount of kills as someone from the ACD role, for example. 
 
 Let's take a look at the distribution of `WSCORE` for support players.
+
+<iframe src="assets/wscore_sup.html" width=800 height=600 frameBorder=0></iframe>
+
+As we can see, the `WSCORE` for support players is a lot lower than that of other roles. So when we choose the best, worst, and average players, we must choose the best, worst, and average players in each role. 
+
+| position   |     WSCORE |        KDA |   earned gpm |   golddiffat15 |   xpdiffat15 |   csdiffat15 |
+|:-----------|-----------:|-----------:|-------------:|---------------:|-------------:|-------------:|
+| bot        |  0.904918  |  0.453928  |     0.94434  |     -0.217684  |   -0.0825527 |   -0.173609  |
+| jng        | -0.0795993 |  0.0552768 |    -0.31044  |      0.137101  |    0.0112628 |    0.0512364 |
+| mid        |  1.10015   |  0.461663  |     0.626748 |      0.0658577 |    0.0865614 |    0.0320888 |
+| sup        | -1.39659   | -0.165469  |    -1.63583  |      0.0863344 |    0.0236002 |    0.171689  |
+| top        | -0.350066  | -0.707908  |     0.434024 |     -0.0394479 |   -0.0266024 |   -0.0716953 |
+
+It seems that `mid` and `bot` (ADC) players have the highest statistics, while `sup` and `jng` (jungle) players seem to have the lowest. But that doesn't mean that support and jungle players are worse, it just means their role tends to do less of these statistics. So we must adjust WSCORE to compare players to their individual roles, not just the league averages. 
+
+So now we will calculated **PAWSCORE**, or **Position Adjusted W-Score**. We use the same formula as W-Score, but when standardizing, we standardize using the player's position instead of the entire dataset. 
+
+Here is a look at *some* our data with `PAWSCORE` added:
+
+| playername   |    WSCORE |   PAWSCORE |
+|:-------------|----------:|-----------:|
+| Aiming       |  4.03204  |  3.03437   |
+| Arrow        | -3.79693  | -4.47901   |
+| Berserker    |  3.7277   |  2.61146   |
+| Cheoni       | -4.78286  | -5.12006   |
+| Danny        |  3.6619   |  2.81346   |
+| Deft         |  0.864622 | -0.0148235 |
+| FBI          |  0.320103 | -0.319738  |
+| Ghost        | -1.00998  | -1.94507   |
+| Gumayusi     |  4.79718  |  3.76698   |
+| Hans SamD    | -0.385392 | -1.11788   |
+
+As you can see, there is a big difference between `WSCORE` and `PAWSCORE`. We can take a look at the distribution of `PAWSCORE`
+
+<iframe src="assets/pawscore.html" width=800 height=600 frameBorder=0></iframe>
