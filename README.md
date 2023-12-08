@@ -1,8 +1,9 @@
 # "Top Diff"
 **Jeremy Quinto**
-*Note: this is not the most detailed writeup of this project*
 
 ## Introduction
+
+This project was done for DSC80 at UCSD, 2023.
 
 Often in video games, when outplaying their opponent in their position, will type "(position) diff". For example, when I dominate the tank player on the other team, I often type "tank diff" in the chat to let them know. 
 
@@ -86,7 +87,7 @@ Here is *part* of what our final `players` dataset looks like:
 
 Next, note that when thinking about creating a performance metric, we must find the variables that are the most important to winning games. We will find the variables with the highest correlation with winrate.
 
-However, League of Legends is a **team sport**. In baseball, the LA Angels have arguably the two best players in the league and haven't even made the playoffs since 2019 (😂). So finding a perfect "performance metric" may not be accurate if we base it solely on individual performance. 
+However, League of Legends is a **team sport**. In baseball, the LA Angels have arguably the two best players in the league and haven't even made the playoffs since 2019. So finding a perfect "performance metric" may not be accurate if we base it solely on individual performance. 
 
 So what we will do is create a dataframe called `teams`, which has the average statistics for each team. Then we will find the variables with the highest correlation with winrate, and create our performance metric from there.
 
