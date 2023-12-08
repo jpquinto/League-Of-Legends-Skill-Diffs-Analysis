@@ -1,4 +1,4 @@
-# "Top Diff"
+# Esports Skill Difference Analysis
 **Jeremy Quinto**
 
 ## Introduction
